@@ -16,8 +16,8 @@ but keep in mind that for production usage it might need modifications.
 
 ## Configuration
 
-This setup is pre-configured for all regions. You can either connect a ChirpStack Gateway Bridge
-instance (v3.14.0+) to the MQTT broker (port 1883) or connect a Semtech UDP Packet Forwarder.
+This setup is pre-configured for the US915 and EU868 regions. You can either connect a ChirpStack Gateway Bridge
+instance (v3.14.0+) to the MQTT broker (port 9053) or connect a Semtech UDP Packet Forwarder.
 Please note that:
 
 * You must prefix the MQTT topic with the region.
@@ -26,9 +26,9 @@ Please note that:
 * The protobuf marshaler is configured.
 
 This setup also comes with two instances of the ChirpStack Gateway Bridge. One
-is configured to handle the Semtech UDP Packet Forwarder data (port 1700), the
+is configured to handle the Semtech UDP Packet Forwarder data (port 9050), the
 other is configured to handle the Basics Station protocol (port 3001). Both
-instances are by default configured for EU868 (using the `eu868` MQTT topic
+instances are by default configured for US915_0 (using the `us915_0` MQTT topic
 prefix).
 
 ### Reconfigure regions
@@ -42,17 +42,9 @@ UDP instance (see below).
 
 #### ChirpStack Gateway Bridge (UDP)
 
-Within the `docker-compose.yml` file, you must replace the `eu868` prefix in the
+Within the `docker-compose.yml` file, you must replace the `us915_0` prefix in the
 `INTEGRATION__..._TOPIC_TEMPLATE` configuration with the MQTT `topic_prefix` of
-the region you would like to use (e.g. `us915_0`, `au915_0`, `in865`, ...).
-
-#### ChirpStack Gateway Bridge (Basics Station)
-
-Within the `docker-compose.yml` file, you must update the configuration file
-that the ChirpStack Gateway Bridge instance must used. The default is
-`chirpstack-gateway-bridge-basicstation-eu868.toml`. For available
-configuration files, please see the `configuration/chirpstack-gateway-bridge`
-directory.
+the region you would like to use (e.g. `us915_0`, `eu868`, `au915_0`, `in865`, ...).
 
 # Data persistence
 
@@ -88,12 +80,12 @@ $ docker-compose up
 ```
 
 After all the components have been initialized and started, you should be able
-to open http://localhost:8080/ in your browser.
+to open http://localhost:9030/ in your browser.
 
 ##
 
 The example includes the [ChirpStack REST API](https://github.com/chirpstack/chirpstack-rest-api).
-You should be able to access the UI by opening http://localhost:8090 in your browser.
+You should be able to access the UI by opening http://localhost:9040 in your browser.
 
 **Note:** It is recommended to use the [gRPC](https://www.chirpstack.io/docs/chirpstack/api/grpc.html)
 interface over the [REST](https://www.chirpstack.io/docs/chirpstack/api/rest.html) interface.
